@@ -59,12 +59,17 @@ public:
 	void setTextShadowColor( const QColor &c );
 	void setBorderColor( const QColor &c );
 
+public slots:
+	void detach();
+	void attach();
+
 protected:
 	// hook the QWidget move/resize events to update the tracked geometry
 	virtual void moveEvent( QMoveEvent * event );
 	virtual void resizeEvent( QResizeEvent * event );
 	virtual void paintEvent( QPaintEvent * pe );
 	virtual void changeEvent( QEvent * event );
+	virtual void showEvent( QShowEvent* event );
 	
 private:
 	const QSize m_buttonSize;
@@ -72,6 +77,7 @@ private:
 	QPushButton * m_closeBtn;
 	QPushButton * m_maximizeBtn;
 	QPushButton * m_restoreBtn;
+	QPushButton * m_detachBtn;
 	QBrush m_activeColor;
 	QColor m_textShadowColor;
 	QColor m_borderColor;
