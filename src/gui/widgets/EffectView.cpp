@@ -24,6 +24,7 @@
  */
 
 #include <QLabel>
+#include <QLayout>
 #include <QPushButton>
 #include <QMdiArea>
 #include <QMdiSubWindow>
@@ -108,8 +109,7 @@ EffectView::EffectView( Effect * _model, QWidget * _parent ) :
 		if( m_controlView )
 		{
 			m_subWindow = gui->mainWindow()->addWindowedWidget( m_controlView );
-			m_subWindow->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-			m_subWindow->setFixedSize( m_subWindow->size() );
+			m_subWindow->layout()->setSizeConstraint(QLayout::SetFixedSize);
 
 			Qt::WindowFlags flags = m_subWindow->windowFlags();
 			flags &= ~Qt::WindowMaximizeButtonHint;
