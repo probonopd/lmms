@@ -138,9 +138,15 @@ void SubWindow::changeEvent( QEvent *event )
 
 }
 
-void SubWindow::showEvent(QShowEvent *)
+void SubWindow::showEvent(QShowEvent *e)
 {
 	attach();
+	QMdiSubWindow::showEvent(e);
+}
+
+bool SubWindow::isDetached() const
+{
+	return widget()->windowFlags().testFlag(Qt::Window);
 }
 
 
@@ -229,7 +235,7 @@ void SubWindow::setBorderColor( const QColor &c )
 
 void SubWindow::detach()
 {
-	if (widget()->windowFlags().testFlag(Qt::Window)) {
+	if (isDetached()) {
 		return;
 	}
 	auto pos = mapToGlobal(widget()->pos());
@@ -242,7 +248,7 @@ void SubWindow::detach()
 
 void SubWindow::attach()
 {
-	if (! widget()->windowFlags().testFlag(Qt::Window)) {
+	if (! isDetached()) {
 		return;
 	}
 	auto frame = widget()->windowHandle()->frameGeometry();
@@ -253,7 +259,7 @@ void SubWindow::attach()
 
 	// Delay moving & resizing using event queue. Ensures that this widget is
 	// visible first, so that resizing works.
-	QObject o;connect(&o, &QObject::destroyed, this, [this, frame]() {
+	QObject o; connect(&o, &QObject::destroyed, this, [this, frame]() {
 		move(mdiArea()->mapFromGlobal(frame.topLeft()));
 		resize(frame.size());
 	}, Qt::QueuedConnection);

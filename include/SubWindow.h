@@ -70,6 +70,8 @@ protected:
 	virtual void paintEvent( QPaintEvent * pe );
 	virtual void changeEvent( QEvent * event );
 	virtual void showEvent( QShowEvent* event );
+
+	bool isDetached() const;
 	
 private:
 	const QSize m_buttonSize;
