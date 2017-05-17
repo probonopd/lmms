@@ -22,6 +22,7 @@ after_success:
   - unset QTDIR; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
   - export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/pulseaudio/
   - sed -i -e 's|^Exec=.*|Exec=lmms|g' ./appdir/usr/share/applications/lmms.desktop
+  - cp appdir/usr/share/pixmaps/lmms.png appdir/lmms.png
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -bundle-non-qt-libs
   - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/*.desktop -appimage
   - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
